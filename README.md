@@ -26,7 +26,7 @@ This repository includes four main blocks:
 	
 	b. Detailed descriptions how to setup this framework (Readme.md).
 	
-* 2. 	A data folder containing:
+2. * 	A data folder containing:
 	
 	a. A part of the synthetic dataset used to pretrain our network
 	
