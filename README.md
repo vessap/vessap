@@ -50,7 +50,7 @@ Here we provide three models:
 * Real model from the Vessap paper for two input chanels  ('trained_model.dat').
 
 The following arguments can be passed through the terminal:
-`
+```
 positional arguments:
   filenames             input filename(s) should follow the sequence for
                         multiple channels
@@ -80,12 +80,12 @@ optional arguments:
   --hist-cutoff HIST_CUTOFF
                         Cutoff to use when applying histogram cutoff (default:
                         0.99)
- `
+ ```
 
 ## Training a model
 
 Training recquires a labeled dataset, in this git we provide an exemplary dataset with labels. You can either refine a model, for example our 'synth_model' or retrain a model from a random initialization. Please then specify your training set and your labels and pass them as arguments. Further arguments can be passed through the terminal:
-`
+```
   -h, --help            show this help message and exit
   --inputFns INPUTFNS   a text file containing a list of names/path of input
                         data for the traning (one example per line) (default:
@@ -118,7 +118,7 @@ Training recquires a labeled dataset, in this git we provide an exemplary datase
   --lr LEARNING_RATE    learning rate (default: 0.01)
   --decay DECAY         learning rate decay per epoch (default: 0.99)
   --weighted-cost       Whether to use weighted cost or not (default: False)
-`
+```
 
 ## Feature extraction
 
@@ -127,7 +127,7 @@ The feature extraction extracts the skeleton length, number of bifurcation point
 #### Use your own data
 
 To extract features from your own images, please have segmented data in an itk-comaptible format first. If you do not have a binary segmentation please run the the [Segmenting data](#test) routine on your images first. The following arguments can be passed through the terminal:
-`
+```
 positional arguments:
   filenames             input filename(s) should follow the sequence for
                         multiple channels
@@ -147,7 +147,7 @@ optional arguments:
                         (default: _rads)
   --f FORMAT            NIFTI file format for saving outputs (default:
                         .nii.gz)
-`
+```
 #### Regional Features
 
 To extract features in your own images for a particular region of interest, for example regions from the Allen brain atlas, you can upload images of those regions, segment them using the [Segmenting data](#test) routine and then extract the featues using the feature extraction routine. If you have a dataset which is registered to the Allen brain atlas, the utility scripts in the matlab folder allow the calculation of whole brain statistics. 
