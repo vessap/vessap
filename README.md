@@ -18,6 +18,8 @@ This code can be executed in a public code ocean capsule at xxxxlink.
 
 For each of the described tasks, segmentation, training and feature extraction we have  set up a working example (demo) in the code ocean compute capsule. 
 
+This repository includes four main blocks:
+
 1. 	A utility library for the Deep Learning part of the work in THEANO including 
 	
 	a. The complete theano library including all code, operators, networks and utilities
@@ -37,6 +39,8 @@ For each of the described tasks, segmentation, training and feature extraction w
 	a. Models trained on sythetic data for 1 and 2 channel network input
 	
 	b. The fully refined 2 input channel network
+	
+4. 	MATLAB scripts for statistical evaluation of features
 
 
 ## Segmenting data
