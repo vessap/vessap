@@ -17,17 +17,20 @@ This code can be executed in a public code ocean capsule at xxxxlink.
 
 For each of the described tasks, segmentation, training and feature extraction we have  set up a working example (demo) in the code ocean compute capsule. 
 
-1. A utility library for the Deep Learning part of the work in THEANO including 
+1. 	A utility library for the Deep Learning part of the work in THEANO including 
+	
 	a. The complete theano library including all code, operators, networks and utilities
 	b. Detailed descriptions how to setup this framework (Readme.md).
 	c. An instruction file (demo) how to segment your own data and how to train your own model (demo_instructions.md).
 
-2. A data folder containing:
+2. 	A data folder containing:
+	
 	a. The synthetic dataset used to pretrain our network
 	b. The training data and corresponding ground truth annotations
 	c. A test set 
 
-3. A model folder containing:
+3. 	A model folder containing:
+	
 	a. Models trained on sythetic data for 1 and 2 channel network input
 	b. The fully refined 2 input channel network
 
