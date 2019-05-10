@@ -1,6 +1,6 @@
 ## README 
 
-For the Nature Methods submission "Automated analysis of whole brain vasculature using machine learning"
+For the Nature Methods submission "[Automated analysis of whole brain vasculature using machine learning](https://www.biorxiv.org/content/10.1101/613257v1)"
 
 Authors:  Johannes C. Paetzold and Giles Tetteh
 
