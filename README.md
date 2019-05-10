@@ -53,76 +53,73 @@ Here we provide three models:
 
 The following arguments can be passed through the terminal:
 
-    -- help
-    
-    parser = argparse.ArgumentParser(description='Apply Cross-hair filters network to predict a NIFTI volume')
-    
-    parser.add_argument('filenames', metavar='filenames', type=str, nargs='+', help='input filename(s) should follow the sequence for multiple channels')
-    
-    parser.add_argument('--maskFilename', dest='maskFn', type=str, default=None, help='a mask file to be applied to the predictions')
-    
-    parser.add_argument('--output', dest='output', type=str, default='',help='output folder for storing predictions (default: current working directory)')
-    
-    parser.add_argument('--o_probs', dest='suffix_probs', type=str, default='_probs',help='filename suffix for renaming probability output files (default: _probs)')
-    
-    parser.add_argument('--o_bins', dest='suffix_bins', type=str, default='_bins',help='filename suffix for renaming binary output files (default: _bins)')
-    
-    parser.add_argument('--t', dest='threshold', type=float, default=0.5,help='threshold for converting probabilities to binary (default: 0.5)')
-    
-    parser.add_argument('--f', dest='format', type=str, default='.nii.gz',help='NIFTI file format for saving outputs (default: .nii.gz)')
-    
-    parser.add_argument('--model', dest='model', type=str, default='model.dat',help='a saved model file (default: model.dat)')
-    
-    parser.add_argument('--preprocess', dest='preprocess', action='store_true',help='Whether to apply preprocessing or not')
-    
-    parser.add_argument('--bs', dest='batch_size', type=int, default=1,help='Batch size to apply during prediction (default: 1)')
-    
-    parser.add_argument('--cs', dest='cube_size', type=int, default=64,help='Size of cube to be applied during prediction (default: 64)')
-    
-    parser.add_argument('--hist-cutoff', dest='hist_cutoff', type=str, default="0.99", help='Cutoff to use when applying histogram cutoff (default: 0.99)')
-    
+positional arguments:
+  filenames             input filename(s) should follow the sequence for
+                        multiple channels
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --maskFilename MASKFN
+                        a mask file to be applied to the predictions
+  --output OUTPUT       output folder for storing predictions (default:
+                        current working directory)
+  --o_probs SUFFIX_PROBS
+                        filename suffix for renaming probability output files
+                        (default: _probs)
+  --o_bins SUFFIX_BINS  filename suffix for renaming binary output files
+                        (default: _bins)
+  --t THRESHOLD         threshold for converting probabilities to binary
+                        (default: 0.5)
+  --f FORMAT            NIFTI file format for saving outputs (default:
+                        .nii.gz)
+  --model MODEL         a saved model file (default: model.dat)
+  --preprocess PREPROCESS
+                        Whether to apply preprocessing or not (default: 0 =>
+                        False)
+  --bs BATCH_SIZE       Batch size to apply during prediction (default: 1)
+  --cs CUBE_SIZE        Size of cube to be applied during prediction (default:
+                        64)
+  --hist-cutoff HIST_CUTOFF
+                        Cutoff to use when applying histogram cutoff (default:
+                        0.99)
+ 
 
 ## Training a model
 
 Training recquires a labeled dataset, in this git we provide an exemplary dataset with labels. You can either refine a model, for example our 'synth_model' or retrain a model from a random initialization. Please then specify your training set and your labels and pass them as arguments. Further arguments can be passed through the terminal:
+  -h, --help            show this help message and exit
+  --inputFns INPUTFNS   a text file containing a list of names/path of input
+                        data for the traning (one example per line) (default:
+                        inputs.txt)
+  --labelFns LABELFNS   a text file containing a list of names/path of data
+                        label for the traning (one example per line) (default:
+                        labels.txt)
+  --maskFns MASKFNS     a text file containing a list of names/path of mask
+                        data for the traning (one example per line)
+  --preprocess          Whether to apply preprocessing or not (default: False)
+  --hist-cutoff HIST_CUTOFF
+                        Cutoff to use when applying histogram cutoff (default:
+                        0.99)
+  --initModel MODEL     a path to a model which should be used as a base for
+                        the training (default: None)
+  --n_in N_IN           number of input channels (default: 1)
+  --n_out N_OUT         number of prediction classes (default: 2)
+  --batch-size BATCH_SIZE
+                        batch size for training (default: None)
+  --cs CUBE_SIZE        Size of cube to be used during training (default: 64)
+  --epochs EPOCHS       number of training epochs (default: 1)
+  --save-after SAVE_AFTER
+                        number of training epochs after which the model should
+                        be saved (default: 1)
+  --modelFn MODELFN     filename for saving trained models. Note .dat will be
+                        appended autmatically (default: model)
+  --modelFolder MODEL_FOLDER
+                        folder where models will be saved (default: current
+                        working directory)
+  --lr LEARNING_RATE    learning rate (default: 0.01)
+  --decay DECAY         learning rate decay per epoch (default: 0.99)
+  --weighted-cost       Whether to use weighted cost or not (default: False)
 
-    -- help
-    
-    parser = argparse.ArgumentParser(description='Train/Finetune a cross-hair filter based FCN on NIFTI volumes')
-    
-    parser.add_argument('--inputFns', dest='inputFns', type=str, default='inputs.txt', help='a text file containing a list of names/path of input data for the traning (one example per line) (default: inputs.txt)') 
-    
-    parser.add_argument('--labelFns', dest='labelFns', type=str, default='labels.txt', help='a text file containing a list of names/path of data label for the traning (one example per line) (default: labels.txt)')
-    
-    parser.add_argument('--maskFns', dest='maskFns', type=str, default=None, help='a text file containing a list of names/path of mask data for the traning (one example per line)')
-    
-    parser.add_argument('--preprocess', dest='preprocess', action='store_true', help='Whether to apply preprocessing or not (default: False)')
-    
-    parser.add_argument('--hist-cutoff', dest='hist_cutoff', type=str, default="0.99", help='Cutoff to use when applying histogram cutoff (default: 0.99)')
-    
-    parser.add_argument('--initModel', dest='model', type=str, default=None, help='a path to a model which should be used as a base for the training (default: None)')
-    
-    parser.add_argument('--n_in', dest='n_in', type=int, default=1, help='number of input channels (default: 1)')
-    
-    parser.add_argument('--n_out', dest='n_out', type=int, default=2, help='number of prediction classes (default: 2)')
-    
-    parser.add_argument('--batch-size', dest='batch_size', type=int, default=1, help='batch size for training (default: None)')
-    
-    parser.add_argument('--cs', dest='cube_size', type=int, default=64, help='Size of cube to be used during training (default: 64)')
-    
-    parser.add_argument('--epochs', dest='epochs', type=int, default=1, help='number of training epochs (default: 1)')
-    
-    parser.add_argument('--save-after', dest='save_after', type=int, default=1, help='number of training epochs after which the model should be saved (default: 1)')
-    
-    parser.add_argument('--modelFn', dest='modelFn', type=str, default='model', help='filename for saving trained models. Note .dat will be appended autmatically (default: model)')
-    
-    parser.add_argument('--modelFolder', dest='model_folder', type=str, default='', help='folder where models will be saved (default: current working directory)')
-    
-    parser.add_argument('--lr', dest='learning_rate', type=float, default=0.01, help='learning rate (default: 0.01)')
-    
-    parser.add_argument('--decay', dest='decay', type=float, default=0.99,help='learning rate decay per epoch (default: 0.99)')
-    
-    parser.add_argument('--weighted-cost', dest='weighted_cost', action='store_true', help='Whether to use weighted cost or not (default: False)')
 
 ## Feature extraction
 
@@ -132,27 +129,25 @@ The feature extraction extracts the skeleton length, number of bifurcation point
 
 To extract features from your own images, please have segmented data in an itk-comaptible format first. If you do not have a binary segmentation please run the the [Segmenting data](#test) routine on your images first. The following arguments can be passed through the terminal:
 
-    -- help
-    parser = argparse.ArgumentParser(description='Extract Centerlines, Bifurcations and Radius from binary vessel segmentation')
-        
-    parser.add_argument('filenames', metavar='filenames', type=str, nargs='+',help='input filename(s) should follow the sequence for multiple channels')
-    
-    parser.add_argument('--output', dest='output', type=str, default='',help='output folder for storing predictions (default: current working directory)')
-    
-    parser.add_argument('--no-c', dest='save_centerlines', action='store_false',help='Do not save centerline extraction')
-    
-    parser.add_argument('--o_cens', dest='suffix_cens', type=str, default='_cens',help='filename suffix for renaming CENTERLINE output files (default: _cens)')
-                   
-    parser.add_argument('--no-b', dest='save_bifurcations', action='store_false', help='Do not save bifurcation detection')
-                   
-    parser.add_argument('--o_bifs', dest='suffix_bifs', type=str, default='_bifs',help='filename suffix for renaming BIFURCATION output files (default: _bifs)')
-                   
-    parser.add_argument('--no-r', dest='save_radius', action='store_false',help='Do not save radius estimates')
-                   
-    parser.add_argument('--o_rads', dest='suffix_rads', type=str, default='_rads',help='filename suffix for renaming RADIUS output files (default: _rads)')
-                   
-    parser.add_argument('--f', dest='format', type=str, default='.nii.gz', help='NIFTI file format for saving outputs (default: .nii.gz)')
-    
+positional arguments:
+  filenames             input filename(s) should follow the sequence for
+                        multiple channels
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --output OUTPUT       output folder for storing predictions (default:
+                        current working directory)
+  --no-c                Do not save centerline extraction
+  --o_cens SUFFIX_CENS  filename suffix for renaming CENTERLINE output files
+                        (default: _cens)
+  --no-b                Do not save bifurcation detection
+  --o_bifs SUFFIX_BIFS  filename suffix for renaming BIFURCATION output files
+                        (default: _bifs)
+  --no-r                Do not save radius estimates
+  --o_rads SUFFIX_RADS  filename suffix for renaming RADIUS output files
+                        (default: _rads)
+  --f FORMAT            NIFTI file format for saving outputs (default:
+                        .nii.gz) 
 #### Regional Features
 
 To extract features in your own images for a particular region of interest, for example regions from the Allen brain atlas, you can upload images of those regions, segment them using the [Segmenting data](#test) routine and then extract the featues using the feature extraction routine. If you have a dataset which is registered to the Allen brain atlas, the utility scripts in the matlab folder allow the calculation of whole brain statistics. 
