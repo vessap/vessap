@@ -1,6 +1,6 @@
 %#########################################################################
 % Parse the ontology.xml of the AllenBrainMouse_CCFv3_201710
-% 
+%author Mihail Todorov 
 xDoc = xmlread('D:\Atlases\AllenBrainMouse_CCFv3_201710\ontology.xml');
 
 allListitems = xDoc.getElementsByTagName('structure');
