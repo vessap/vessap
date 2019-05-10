@@ -24,15 +24,13 @@ For each of the described tasks, segmentation, training and feature extraction w
 	
 	b. Detailed descriptions how to setup this framework (Readme.md).
 	
-	c. An instruction file (demo) how to segment your own data and how to train your own model (demo_instructions.md).
-
 2. 	A data folder containing:
 	
-	a. The synthetic dataset used to pretrain our network
+	a. A part of the synthetic dataset used to pretrain our network
 	
-	b. The training data and corresponding ground truth annotations
+	b. An exemplary testing/training dataset and corresponding ground truth annotations
 	
-	c. A test set 
+	c. The whole data can be found here (). 
 
 3. 	A model folder containing:
 	
