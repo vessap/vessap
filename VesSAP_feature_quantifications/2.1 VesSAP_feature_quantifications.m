@@ -1,4 +1,5 @@
 %% Extract volumes by major region boundaries
+% author Mihail Todorov 
 % be aware that neighboring labels will be included as this is just copying a bounding box
 % this will include some duplication of labels as well as bstem, and hc
 % will have labels from the ctx; cereb will have some labels from bstem
