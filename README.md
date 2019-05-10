@@ -12,6 +12,7 @@ This code can be executed in a public code ocean capsule at xxxxlink.
 * [Segmenting data](#test)
 * [Training a model](#train)
 * [Feature extraction](#feats)
+* [Dependencies](#depend)
 
 ## General info
 
@@ -20,28 +21,31 @@ For each of the described tasks, segmentation, training and feature extraction w
 1. 	A utility library for the Deep Learning part of the work in THEANO including 
 	
 	a. The complete theano library including all code, operators, networks and utilities
+	
 	b. Detailed descriptions how to setup this framework (Readme.md).
+	
 	c. An instruction file (demo) how to segment your own data and how to train your own model (demo_instructions.md).
 
 2. 	A data folder containing:
 	
 	a. The synthetic dataset used to pretrain our network
+	
 	b. The training data and corresponding ground truth annotations
+	
 	c. A test set 
 
 3. 	A model folder containing:
 	
 	a. Models trained on sythetic data for 1 and 2 channel network input
+	
 	b. The fully refined 2 input channel network
 
 
 ## Segmenting data
 
-To run our segmentation demo please execute the 'Demo 1' in the run file. The Demo will run a segmentation on one exemplary patch of 500x500x50 pixel (filename) from our presented dataset. The segmentation will be output as a binary (threshold = 0.5) Nifti file named "filename_bins.nii.gz" and as a probabilistic prediction named "filename_probs.nii.gz".
+The prediction on our models generates a binary segmentation (threshold=0.5) and a probabilistic prediction.
 
-#### Segmenting your own data
-
-To segment, please upload your data in an itk-comaptible format first. Please consider the computational limitations of this compute capsule. Next, please choose a model you want to use for the prediction, in this capsule we provide three models:
+Here we provide three models:
 
 * Synthetic model for one chanel input images  ('synth_model.dat'). 
 * Synthetic model for two chanel input images  ('synth_model_2ch_input.dat'). 
@@ -80,11 +84,7 @@ The following arguments can be passed through the terminal:
 
 ## Training a model
 
-To run our training demo please execute the 'Demo 2' in the run file. The Demo will train a network on an exemplary patch of 500x500x50 pixel (filename) from our presented dataset. The trained model will be output as a Nifti file named "dasdfad.dat".
-
-#### Train your own model
-
-To train your own model, please upload your data in and label in an itk-comaptible format first. You can either refine a model, for example our 'synth_model' or retrain it a model from a random initialization. Please then specify your training set and your labels and pass them as arguments. Further arguments can be passed through the terminal:
+Training recquires a labeled dataset, in this git we provide an exemplary dataset with labels. You can either refine a model, for example our 'synth_model' or retrain a model from a random initialization. Please then specify your training set and your labels and pass them as arguments. Further arguments can be passed through the terminal:
 
     -- help
     
@@ -126,11 +126,11 @@ To train your own model, please upload your data in and label in an itk-comaptib
 
 ## Feature extraction
 
-To run our feature extraction demo please execute the 'Demo 3' in the run file. The Demo will extract the centerlines, bifurcation points and radius for an exemplary patch of 500x500x50 pixel (filename) from our presented dataset. The extracted features will be output as a Nifti files. Further the skeleton length, number of bifurcation points, maximum radius and average radius will be returned in the terminal.
+The feature extraction extracts the skeleton length, number of bifurcation points, maximum radius and average radius.
 
 #### Use your own data
 
-To extract features from your own images, please upload your segmented data in an itk-comaptible format first. If you do not have a binary segmentation please run the the [Segmenting data](#test) routine on your images first. The following arguments can be passed through the terminal:
+To extract features from your own images, please have segmented data in an itk-comaptible format first. If you do not have a binary segmentation please run the the [Segmenting data](#test) routine on your images first. The following arguments can be passed through the terminal:
 
     -- help
     parser = argparse.ArgumentParser(description='Extract Centerlines, Bifurcations and Radius from binary vessel segmentation')
@@ -159,7 +159,8 @@ To extract features in your own images for a particular region of interest, for 
 
 
 
-##Dependencies
+## Dependencies
+
 * numpy==1.12.0 
 * scipy==0.18.1 
 * skimage==0.15.x
