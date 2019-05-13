@@ -20,27 +20,27 @@ For each of the described tasks, segmentation, training and feature extraction w
 
 This repository includes four main blocks:
 
-1. 	A utility library for the Deep Learning part of the work in THEANO including 
+1. A utility library for the Deep Learning part of the work in THEANO including 
 	
 	a. The complete theano library including all code, operators, networks and utilities
 	
-	b. Detailed descriptions how to setup this framework (Readme.md).
+	b. Detailed descriptions how to setup this framework (Readme.md).	
 	
-2.  	A data folder containing:
+2.  A data folder containing:
 	
-a. A part of the synthetic dataset used to pretrain our network	
-	
-b. An exemplary testing/training dataset and corresponding ground truth annotations
-	
-c. The whole data can be found here (). 
+	a. A part of the synthetic dataset used to pretrain our network	
 
-3. 	A model folder containing:
+	b. An exemplary testing/training dataset and corresponding ground truth annotations
+
+	c. The whole data can be found here (). 
+
+3. A model folder containing:
 	
 	a. Models trained on sythetic data for 1 and 2 channel network input
 	
 	b. The fully refined 2 input channel network
 	
-4. 	MATLAB scripts for statistical evaluation of features
+4. MATLAB scripts for statistical evaluation of features
 
 
 ## Segmenting data
