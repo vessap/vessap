@@ -28,11 +28,11 @@ This repository includes four main blocks:
 	
 2.  	A data folder containing:
 	
-	a. A part of the synthetic dataset used to pretrain our network
+a. A part of the synthetic dataset used to pretrain our network	
 	
-	b. An exemplary testing/training dataset and corresponding ground truth annotations
+b. An exemplary testing/training dataset and corresponding ground truth annotations
 	
-	c. The whole data can be found here (). 
+c. The whole data can be found here (). 
 
 3. 	A model folder containing:
 	
