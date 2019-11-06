@@ -1,9 +1,10 @@
+from __future__ import print_function
 import argparse
 import os
 import numpy as np
 from skimage.morphology import skeletonize_3d
 from scipy import ndimage as ndi
-from lib.utilities import get_itk_array, make_itk_image, write_itk_image, get_itk_image
+from lib.dvn.utils import get_itk_array, make_itk_image, write_itk_image, get_itk_image
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Extract Centerlines, Bifurcations and Radius from binary vessel segmentation')
@@ -109,22 +110,22 @@ def run():
     rad_suffix = args.suffix_rads
     fmt = args.format
 
-    print '----------------------------------------'
-    print ' Feature Extraction Parameters '
-    print '----------------------------------------'
-    print 'Input files:', filenames
-    print 'Output folder:', outputFn
-    print 'Output format:', fmt
-    print 'Centerline file suffix:', cen_suffix
-    print 'Bifurcation file suffix:', bif_suffix
-    print 'Radius file suffix:', rad_suffix
-    print 'Save centerline extractions:', save_cen
-    print 'Save bifurcation detections:', save_bif
-    print 'Save radius estimates:', save_rad
-    print '----------------------------------------'
+    print ('----------------------------------------')
+    print (' Feature Extraction Parameters ')
+    print ('----------------------------------------')
+    print ('Input files:', filenames)
+    print ('Output folder:', outputFn)
+    print ('Output format:', fmt)
+    print ('Centerline file suffix:', cen_suffix)
+    print ('Bifurcation file suffix:', bif_suffix)
+    print ('Radius file suffix:', rad_suffix)
+    print ('Save centerline extractions:', save_cen)
+    print ('Save bifurcation detections:', save_bif)
+    print ('Save radius estimates:', save_rad)
+    print ('----------------------------------------')
 
     for fn in filenames:
-        print 'predicting features for :', fn
+        print('predicting features for :', fn)
         cen = None
         bif = None
         rad = None
@@ -153,7 +154,7 @@ def run():
             ofn = os.path.join(outputFn, prefix + cen_suffix + fmt)
             save_data(data=np.asarray(cen, dtype='uint8'), img=img, filename=ofn)
 
-    print 'finished!'
+    print ('finished!')
 
 if __name__ == '__main__':
     run()
