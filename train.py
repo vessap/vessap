@@ -1,3 +1,4 @@
+from __future__ import print_function
 from lib.utilities import get_itk_array,write_itk_imageArray,load_data
 import numpy as np
 from lib.networks import FCNN as NET
@@ -30,7 +31,6 @@ def histinfo(data, cfreq):
     return data
 
 def processdata(X, hist_cutoff, n_in):
-    print np.min(X), np.max(X)
     if n_in == 1:
         data = histinfo(data=X, cfreq=float(hist_cutoff))
         data = norm_data(data=data)
@@ -44,7 +44,6 @@ def processdata(X, hist_cutoff, n_in):
         for i in range(len(X)):
             data[i] = norm_data(histinfo(data=X[i], cfreq=float(cfs[i])))
 
-        print np.min(data), np.max(data)
         return data
 
 def load_model(filename=None, n_in=1, n_out=2):
@@ -286,33 +285,33 @@ def run():
         iters.append(n_epochs % save_after)
 
     sh = data_x.shape
-    print '..............................'
-    print 'Training Parameters'
-    print '..............................'
-    print 'learning-rate:',lr
-    print 'decay:', decay
-    print 'Number of epochs:', n_epochs
-    print 'Batch size:', batch_size
-    print 'Weighted cost:',weighted_cost
-    print 'Base Model:',args.model
-    print 'Model save folder:', model_folder
-    print 'Model save filename:',modelFn
-    print 'save model after every', save_after, 'epoch(s)'
-    print 'Apply preprocessing:', args.preprocess
-    print 'Histogram cutoff:', args.hist_cutoff
-    print 'Number of input channels:', args.n_in
-    print 'Number of classes:', args.n_out
-    print 'Number of Examples Extracted:', sh[0]
-    print 'Training cube size:', sh[-3:]
-    print '...................................................\n \n'
+    print('..............................')
+    print('Training Parameters')
+    print('..............................')
+    print('learning-rate:',lr)
+    print('decay:', decay)
+    print('Number of epochs:', n_epochs)
+    print('Batch size:', batch_size)
+    print('Weighted cost:',weighted_cost)
+    print('Base Model:',args.model)
+    print('Model save folder:', model_folder)
+    print('Model save filename:',modelFn)
+    print('save model after every', save_after, 'epoch(s)')
+    print('Apply preprocessing:', args.preprocess)
+    print('Histogram cutoff:', args.hist_cutoff)
+    print('Number of input channels:', args.n_in)
+    print('Number of classes:', args.n_out)
+    print('Number of Examples Extracted:', sh[0])
+    print('Training cube size:', sh[-3:])
+    print('...................................................\n \n')
 
     for i, this_epochs in enumerate(iters):
         model, lr = train_model(model=model,data_x=data_x,data_y=data_y,data_mask=data_mask,batch_size=batch_size,n_epochs=this_epochs,lr=lr,weighted_cost=weighted_cost)
         this_model_fn = os.path.abspath(os.path.join(model_folder,'model'+str(i+1)+'.dat'))
-        print 'saving model......'
+        print('saving model......')
         model.save_model(this_model_fn)
         lr = lr * decay
-        print '.....................................................................'
+        print('.....................................................................')
 
 if __name__ == "__main__":
     run()

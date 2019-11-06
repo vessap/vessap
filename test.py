@@ -1,4 +1,5 @@
-from lib.utilities import get_itk_array, get_itk_image, make_itk_image, write_itk_image, load_data, get_patch_data, get_volume_from_patches
+from __future__ import print_function
+from lib.dvn.utils import get_itk_array, get_itk_image, make_itk_image, write_itk_image, load_data, get_patch_data, get_volume_from_patches
 import numpy as np
 from lib.networks import FCNN as NET
 import argparse
@@ -50,7 +51,7 @@ def generate_data(filenames, maskFn=None, preprocess=False, hist_cutoff="0.99"):
 
 
     data = np.array(data)
-    print 'Volume size: ', data.shape[-3:]
+    print('Volume size: ', data.shape[-3:])
     if not maskFn is None:
         mask = get_itk_array(os.path.abspath(maskFn))
         assert mask.shape == data.shape[-3:], 'Image size should match mask size'
@@ -132,22 +133,22 @@ def predict_volume(model, data, mask, cube_size=64, batch_size=1, cutoff=0.5):
 
 def run():
     args = parse_args()
-    print '----------------------------------------'
-    print ' Testing Parameters '
-    print '----------------------------------------'
-    print 'Model filename:', args.model
-    print 'Input files:', args.filenames
-    print 'Mask file:', args.maskFn
-    print 'Preprocess:', args.preprocess
-    print 'Histogram cutoff:', args.hist_cutoff
-    print 'Cube size:', args.cube_size
-    print 'Batch size:', args.batch_size
-    print 'Binary threshold:', args.threshold
-    print 'Output folder:', args.output
-    print 'Output format:', args.format
-    print 'Binary file suffix:', args.suffix_bins
-    print 'Probabilities file suffix:', args.suffix_probs
-    print '----------------------------------------'
+    print('----------------------------------------')
+    print(' Testing Parameters ')
+    print('----------------------------------------')
+    print('Model filename:', args.model)
+    print('Input files:', args.filenames)
+    print('Mask file:', args.maskFn)
+    print('Preprocess:', args.preprocess)
+    print('Histogram cutoff:', args.hist_cutoff)
+    print('Cube size:', args.cube_size)
+    print('Batch size:', args.batch_size)
+    print('Binary threshold:', args.threshold)
+    print('Output folder:', args.output)
+    print('Output format:', args.format)
+    print('Binary file suffix:', args.suffix_bins)
+    print('Probabilities file suffix:', args.suffix_probs)
+    print('----------------------------------------')
 
     model = load_model(args.model)
     data, mask = generate_data(args.filenames, args.maskFn, args.preprocess, args.hist_cutoff)
@@ -167,7 +168,7 @@ def run():
             d = make_itk_image(d, img)
             write_itk_image(d, os.path.join(args.output, prefix + args.suffix_probs + '_'+ str(i) + args.format))
 
-    print 'finished!'
+    print('finished!')
 
 if __name__ == "__main__":
     run()
