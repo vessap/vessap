@@ -1,1 +1,0 @@
-from fcnn import FCNN
