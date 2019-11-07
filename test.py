@@ -1,7 +1,7 @@
 from __future__ import print_function
-from lib.dvn.utils import get_itk_array, get_itk_image, make_itk_image, write_itk_image, load_data, get_patch_data, get_volume_from_patches
+from dvn.utils import get_itk_array, get_itk_image, make_itk_image, write_itk_image, get_patch_data, get_volume_from_patches
 import numpy as np
-from lib.networks import FCNN as NET
+from dvn import Network as NET
 import argparse
 import os
 
@@ -41,7 +41,7 @@ def processdata(X, hist_cutoff, n_in):
 
 def load_model(filename):
     filename = os.path.abspath(filename)
-    model = NET.load_model(filename)
+    model = NET.load(filename)
     return model
 
 def generate_data(filenames, maskFn=None, preprocess=False, hist_cutoff="0.99"):
@@ -109,8 +109,7 @@ def predict_volume(model, data, mask, cube_size=64, batch_size=1, cutoff=0.5):
     sh = data.shape
     divs = [1,] + [(s/cube_size) for s in sh[-3:]]
     patches = get_patch_data(data, divs=divs, offset=(0,5,5,5))
-    p,_ = model.predict_pgy(patches, batch_size=batch_size)
-    p = np.transpose(p, axes=(0,4,1,2,3))
+    p = model.predict(model='default', x=patches, batch_size=batch_size)
     volume = get_volume_from_patches(p, divs=divs, offset=(0,5,5,5))
 
     if np.sum(padding) > 0:

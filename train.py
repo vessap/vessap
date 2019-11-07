@@ -1,10 +1,12 @@
 from __future__ import print_function
-from lib.utilities import get_itk_array,write_itk_imageArray,load_data
+from dvn.utils import get_itk_array,write_itk_imageArray
 import numpy as np
-from lib.networks import FCNN as NET
-from theano import tensor as T
+from dvn import FCN, VNET, UNET
+from dvn import Network as NET
+from dvn import losses as ls
 import argparse
 import os
+import keras as K
 
 # Defined global variables here .................................
 BLOCK_SIZE = (64, 64, 64)
@@ -46,29 +48,26 @@ def processdata(X, hist_cutoff, n_in):
 
         return data
 
-def load_model(filename=None, n_in=1, n_out=2):
+def load_model(filename=None, n_in=1, n_out=2, modelType=0, use_crosshair=False):
     if filename is None:
-        layers = (
-         [(5,n_in,3,3,3),T.nnet.relu],
-         [(10,5,5,5,5),T.nnet.relu],
-         [(20,10,5,5,5), T.nnet.relu],
-         [(50,20,3,3,3),T.nnet.relu],
-        )
-        model = NET(n_out, layers)
+        modelType = [FCN, VNET, UNET][modelType]
+        model = modelType(nlabels=n_out, nchannels=n_in, cross_hair=use_crosshair)
     else:
         filename = os.path.abspath(filename)
-        model = NET.load_model(filename)
+        model = NET.load(filename)
 
     return model
 
-def train_model(model,data_x,data_y,data_mask,batch_size,n_epochs,lr,weighted_cost):
+def train_model(model,data_x,data_y,data_mask,batch_size,n_epochs,lr,weighted_cost,initial_epoch=0):
     k = []
     if weighted_cost:
         for l in np.unique(data_y):
             if l != 0:
                 k.append(l)
-
-    lr = model.fit(X=data_x,Y=data_y,mask=data_mask,learning_rate=lr,n_epochs=n_epochs,batch_size=batch_size,weighted_cost=weighted_cost, classes=k)
+    sgd = K.optimizers.SGD(lr=lr, decay=0, momentum=0, nesterov=False)
+    loss = ls.weighted_categorical_crossentropy_with_fpr(classes=len(k)) if weighted_cost else ls.categorical_crossentropy(axis=1)
+    model.compile(optimizer=sgd, loss=loss)
+    model.fit(x=data_x,y=data_y,epochs=n_epochs,batch_size=batch_size,initial_epoch=initial_epoch)
     return model, lr
 
 def generate_data(inputFn,labelFn,maskFn,preprocess=False,hist_cutoff=[],n_in=1, cube_size=64):
@@ -224,6 +223,10 @@ def parse_args():
                    help='Cutoff to use when applying histogram cutoff (default: 0.99)')
     parser.add_argument('--initModel', dest='model', type=str, default=None,
                    help='a path to a model which should be used as a base for the training (default: None)')
+    parser.add_argument('--modelType', dest='modelType', type=int, default=0,
+                   help='the model type to train (FCN=0, VNET=1, UNET=2) (default: 0)')
+    parser.add_argument('--use_crosshair', dest='usecrosshair', action='store_true',
+                   help='Whether to use crosshair filters or not (default: False)')
     parser.add_argument('--n_in', dest='n_in', type=int, default=1,
                    help='number of input channels (default: 1)')
     parser.add_argument('--n_out', dest='n_out', type=int, default=2,
@@ -253,7 +256,7 @@ def parse_args():
 def run():
     args = parse_args()
     n_in = args.n_in
-    model = load_model(args.model, args.n_in, args.n_out)
+    model = load_model(args.model, args.n_in, args.n_out, args.modelType, args.usecrosshair)
     n_epochs = args.epochs
     batch_size = args.batch_size
     lr = args.learning_rate
@@ -309,7 +312,7 @@ def run():
         model, lr = train_model(model=model,data_x=data_x,data_y=data_y,data_mask=data_mask,batch_size=batch_size,n_epochs=this_epochs,lr=lr,weighted_cost=weighted_cost)
         this_model_fn = os.path.abspath(os.path.join(model_folder,'model'+str(i+1)+'.dat'))
         print('saving model......')
-        model.save_model(this_model_fn)
+        model.save(this_model_fn)
         lr = lr * decay
         print('.....................................................................')
 
