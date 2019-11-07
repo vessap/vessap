@@ -20,9 +20,9 @@ For each of the described tasks, segmentation, training and feature extraction w
 
 This repository includes four main blocks:
 
-1. A utility library for the Deep Learning part of the work in THEANO including 
+1. A utility library for the Deep Learning part of the work in KERAS including 
 	
-	a. The complete theano library including all code, operators, networks and utilities
+	a. The complete dvn library including all networks and utilities
 	
 	b. Detailed descriptions how to setup this framework (Readme.md).	
 	
@@ -47,11 +47,9 @@ This repository includes four main blocks:
 
 The prediction on our models generates a binary segmentation (threshold=0.5) and a probabilistic prediction.
 
-Here we provide three models:
+Here we provide one models (other models too heavy to be added to the repository about 2GB):
 
-* Synthetic model for one chanel input images  ('synth_model.dat'). 
-* Synthetic model for two chanel input images  ('synth_model_2ch_input.dat'). 
-* Real model from the Vessap paper for two input chanels  ('trained_model.dat').
+* Real model from the Vessap paper for two input channels using the fcn network ('fcn_model.dat').
 
 The following arguments can be passed through the terminal:
 ```
@@ -105,6 +103,10 @@ Training recquires a labeled dataset, in this git we provide an exemplary datase
                         0.99)
   --initModel MODEL     a path to a model which should be used as a base for
                         the training (default: None)
+  -- modelType MODELTYPE
+			the model type to train (FCN=0, VNET=1, UNET=2)
+                        (default: 0)
+  --use_crosshair       Whether to use crosshair filters or not (dfault: False)
   --n_in N_IN           number of input channels (default: 1)
   --n_out N_OUT         number of prediction classes (default: 2)
   --batch-size BATCH_SIZE
