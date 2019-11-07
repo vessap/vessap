@@ -162,7 +162,10 @@ To extract features in your own images for a particular region of interest, for 
 
 ## Dependencies
 
-* numpy==1.12.0 
-* scipy==0.18.1 
-* skimage==0.15.x
-* Theano==0.9.0b1
+* numpy 
+* scipy 
+* skimage
+* Keras
+* Tensorflow
+* SimpleITK
+* matplotlib
