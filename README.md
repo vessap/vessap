@@ -22,7 +22,7 @@ This repository includes four main blocks:
 
 1. A utility library for the Deep Learning part of the work in KERAS including 
 	
-	a. The complete dvn library including all networks and utilities
+	a. The complete deep learning library including all networks and utilities
 	
 	b. Detailed descriptions how to setup this framework (Readme.md).	
 	
