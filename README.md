@@ -4,7 +4,7 @@ For the Nature Methods submission "[Automated analysis of whole brain vasculatur
 
 Authors:  Johannes C. Paetzold and Giles Tetteh
 
-This code can be executed in a public code ocean capsule at xxxxlink.
+This code can be executed in a public code ocean capsule at https://codeocean.com/capsule/0511563/tree/v1.
 
 ## Table of contents
 
